@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobilefirst/config/constant.dart';
 
 class Index extends StatelessWidget {
   @override
@@ -47,6 +48,7 @@ class Index extends StatelessWidget {
               child: Text('LOGIN'),
               onPressed: () {
                 print("LOGIN!!");
+                Navigator.pushNamed(context, 'login');
               },
             ),
             SizedBox(
@@ -57,12 +59,13 @@ class Index extends StatelessWidget {
                   textStyle: TextStyle(
                     fontSize: 20,
                   ),
-                  primary: Colors.amber[900],
+                  primary: pColor,
                   padding: EdgeInsets.all(20.0),
                   shape: StadiumBorder()),
               child: Text('Sign Up'),
               onPressed: () {
-                print("Sign Up");
+                print("สมัครสมาชิก");
+                Navigator.pushNamed(context, 'register');
               },
             ),
 
