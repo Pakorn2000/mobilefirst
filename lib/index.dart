@@ -7,7 +7,7 @@ class Index extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        color: Colors.blue,
+        color: Colors.blue[50],
         child: ListView(
           children: [
             Image.asset(
