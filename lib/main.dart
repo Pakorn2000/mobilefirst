@@ -3,6 +3,7 @@ import 'package:mobilefirst/screen/login.dart';
 import 'package:mobilefirst/screen/register.dart';
 import 'config/constant.dart';
 import 'package:mobilefirst/index.dart';
+import 'package:mobilefirst/screen/dashboard.dart';
 
 void main() {
   runApp(Myapp());
@@ -20,8 +21,10 @@ class Myapp extends StatelessWidget {
         routes: {
           'login': (context) => Login(),
           'register': (context)=> Register(),
+          'dashboard': (context) => Dashboard(),
         },
       home: Index(),
     );
   }
 }
+
