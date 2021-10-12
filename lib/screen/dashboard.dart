@@ -53,6 +53,51 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Text('Menu Package'),
+                decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Video',
+                style: TextStyle(fontSize: 24,)
+                ,),
+                leading: Icon(Icons.video_collection),
+                onTap: (){
+                  print('Menu Video');
+                  Navigator.pushNamed(context, 'video');
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Image',
+                style: TextStyle(fontSize: 24,)
+                ),
+                leading: Icon(Icons.image),
+                onTap: (){
+                  print('Menu Image');
+                  Navigator.pushNamed(context, 'myimage');
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Location',
+                style: TextStyle(fontSize: 24,)
+                ),
+                leading: Icon(Icons.map),
+                onTap: (){
+                  print('Menu Location');
+                  Navigator.pushNamed(context, 'location');
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +114,7 @@ class _DashboardState extends State<Dashboard> {
           children: [
             Text(
               data?.activity ?? 'กำลังโหลดข้อมูล',
-              ),
+            ),
             Text(data?.type ?? ''),
             Text('${data?.participants ?? ""}'),
             Text('${data?.price ?? ""}'),
