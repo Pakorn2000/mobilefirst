@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "731881370391",
+    "project_id": "mobileced-1dd0a",
+    "firebase_url": "https://mobileced-1dd0a-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    "storage_bucket": "mobileced-1dd0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731881370391:android:a20207047517c70ec47d52",
+        "android_client_info": {
+          "package_name": "com.example.mobilefirst"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731881370391-4m44q9ehu0rgpvje8qeg8loqj50qgkej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVgtaQggRVogoW5DuU-7KFwGArQhfiQ9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731881370391-4m44q9ehu0rgpvje8qeg8loqj50qgkej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
