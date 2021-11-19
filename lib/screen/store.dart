@@ -27,16 +27,16 @@ class _StoreState extends State<Store> {
           ],
         ),
         bottomNavigationBar: Container(
-          color: pColor,
+          color: Colors.brown[800],
           child: TabBar(
             indicatorColor: Colors.redAccent,
             labelColor: Colors.white,
             tabs: [
               Tab(
-                text: "Add Data",
+                text: "สั่งซื้อ",
               ),
               Tab(
-                text: "View Data",
+                text: "ประวัติการสั่งซื้อ",
               )
               
             ],

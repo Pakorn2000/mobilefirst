@@ -1,7 +1,15 @@
+
+
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mobilefirst/config/constant.dart';
 import 'package:mobilefirst/screen/dashboard.dart';
+
 
 class FirebaseLogin extends StatefulWidget {
   const FirebaseLogin({ Key? key }) : super(key: key);
@@ -27,11 +35,16 @@ class _FirebaseLoginState extends State<FirebaseLogin> {
             materialPageRoute, (Route<dynamic> route) => false);
 
         }).catchError((onError){
-          print(onError);
+          //print(onError);
+          Fluttertoast.showToast(
+            msg: onError.message,
+            gravity: ToastGravity.SNACKBAR
+            );
         });
 
     }catch (e){
-      print(e);
+     // print(e);
+      
     }
   }
 
@@ -52,8 +65,12 @@ class _FirebaseLoginState extends State<FirebaseLogin> {
                   height: size.height * 0.03,
                 ),
                 Text(
-                  'KMUTNB Login Firebase',
-                  style: TextStyle(fontSize: 25, color: pColor),
+                  'Login',
+                style: GoogleFonts.staatliches(
+                fontSize: 60,
+                color: const Color(0xff000000),
+                ),
+                  
                 ),
                 SizedBox(
                   height: size.height * 0.04,
@@ -64,11 +81,11 @@ class _FirebaseLoginState extends State<FirebaseLogin> {
                     style: TextStyle(color: Colors.black, fontSize: 20),
                     decoration: InputDecoration(
                       icon: Icon(
-                        Icons.alternate_email,
-                        color: pColor,
+                        Icons.email,
+                        color: Colors.brown[500],
                         size: size.height * 0.05,
                       ),
-                      hintText: "Email",
+                      hintText: "อีเมล์",
                     ),
                     onSaved: (value) {
                       email = value!.trim();
@@ -85,11 +102,11 @@ class _FirebaseLoginState extends State<FirebaseLogin> {
                     obscureText: true,
                     decoration: InputDecoration(
                       icon: Icon(
-                        Icons.lock,
-                        color: pColor,
+                        Icons.lock_outline_rounded,
+                        color: Colors.brown[500],
                         size: size.height * 0.05,
                       ),
-                      hintText: "Password",
+                      hintText: "รหัสผ่าน",
                     ),
                     onSaved: (value) {
                       password = value!.trim();
@@ -113,7 +130,7 @@ class _FirebaseLoginState extends State<FirebaseLogin> {
 
                     },
                     color: pColor,
-                    textColor: Colors.white,
+                    textColor: Colors.brown[900],
                     child: Text("login".toUpperCase(),
                         style: TextStyle(fontSize: 16)),
                   ),
@@ -121,13 +138,8 @@ class _FirebaseLoginState extends State<FirebaseLogin> {
                 SizedBox(
                   height: size.height * 0.05,
                 ),
-                Text(
-                  'All rights reserved',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: sColor,
-                  ),
-                ),
+                
+                
               ],
             ),
           ),

@@ -13,11 +13,12 @@ class _ViewDataState extends State<ViewData> {
   final dbfirebase = FirebaseDatabase.instance.reference().child('store');
 
   Future<void> updateData(String key) async {
-    dbfirebase.child(key).update({'status': "SOLD"});
+    //dbfirebase.child(key).update({'status': ""});
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Flexible(
       child: FirebaseAnimatedList(
           query: dbfirebase,
@@ -25,41 +26,28 @@ class _ViewDataState extends State<ViewData> {
             return Container(
               height: 100,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Card(
                   elevation: 5,
                   child: ListTile(
                     leading: CircleAvatar(
-                      child: Icon(Icons.flatware),
+                      child: Icon(Icons.shopping_bag),
+                      radius: 30.0,
                     ),
-                    title: Text('${snapshot.value['name']}'),
+                    title: Text(
+                      '${snapshot.value['name']}',
+                      style: TextStyle(fontSize: 22),
+                    ),
                     subtitle: Row(
                       children: [
-                        Text("ราคา " + '${snapshot.value['price']}'),
-                        Text("  สถานะ " + '${snapshot.value['status']}'),
+                        Text("จำนวน " + '${snapshot.value['count']} ห่อ | ',
+                      style: TextStyle(fontSize: 18),),
+                        Text('${snapshot.value['status']}',
+                        style: TextStyle(fontSize: 18),),
                       ],
                     ),
                     trailing: Column(
-                      children: [
-                        Expanded(
-                          child: IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              print(snapshot.key);
-                              // การลบ (Delete) ข้อมูลใน DB
-                              dbfirebase.child(snapshot.key!).remove();
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: IconButton(
-                            onPressed: () {
-                              updateData(snapshot.key!);
-                            },
-                            icon: Icon(Icons.update),
-                          ),
-                        ),
-                      ],
+                      children: [],
                     ),
                   ),
                 ),

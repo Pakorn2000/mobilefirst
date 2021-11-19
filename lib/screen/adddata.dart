@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobilefirst/config/constant.dart';
+import 'package:mobilefirst/screen/dashboard.dart';
 
 class Adddata extends StatefulWidget {
   const Adddata({ Key? key }) : super(key: key);
@@ -11,7 +13,7 @@ class Adddata extends StatefulWidget {
 
 class _AdddataState extends State<Adddata> {
   // ประกาศตัวแปรสำหรับการเพิ่มสินค้า
-  String? name, price, status;
+  String? name, caddress, count, ordernote, status = 'ได้รับออเดอร์แล้ว';
   final formKey = GlobalKey<FormState>();
   //สร้าง object โดยกำหนดไป child ชื่อ store
   final dbfirebase = FirebaseDatabase.instance.reference().child('store');
@@ -21,12 +23,20 @@ class _AdddataState extends State<Adddata> {
      .push()
      .set({
        'name': name, 
-       'price' : price, 
+       'caddress': caddress,
+       'count' : count, 
        'status': status
        })
-       .then((value) => print('Success'))
+       .then((value) => 
+        Fluttertoast.showToast(
+        msg : ('ยืนยันคำสั่งซื้อแล้ว'),
+        gravity: ToastGravity.SNACKBAR)
+        )
        .catchError((onError){
          print(onError);
+          Fluttertoast.showToast(
+            msg: onError.message,
+            gravity: ToastGravity.SNACKBAR);
        });
   }
 
@@ -40,8 +50,9 @@ class _AdddataState extends State<Adddata> {
             child: Column(
               children: [
                 txtName(),
-                txtPrice(),
-                txtStatus(),
+                txtCount(),
+                customerAddress(),
+                txtOrdernote(),
                 btnSubmit(),
               ],
             ),
@@ -53,20 +64,20 @@ class _AdddataState extends State<Adddata> {
 
   Widget txtName() {
     return Container(
-      margin: EdgeInsets.fromLTRB(15, 20, 15, 20),
+      margin: EdgeInsets.fromLTRB(15, 20, 15, 10),
       child: TextFormField(
         style: TextStyle(
-          fontSize: 24,
-          color: pColor,
+          fontSize: 22,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
-          labelText: 'Product:',
-          icon: Icon(Icons.production_quantity_limits),
-          hintText: 'Input your product name',
+          labelText: 'ชื่อลูกค้า :',
+          icon: Icon(Icons.account_circle_rounded),
+          hintText: 'โปรดใส่ชื่อลูกค้า',
         ),
         validator: (value) {
           if (value!.isEmpty) {
-            return 'กรุณาใส่ข้อมูลด้วย';
+            return 'กรุณาใส่ชื่อด้วย';
           } else if (value.length < 2) {
             return 'กรุณาใส่ข้อมูลมากกว่า 2 ตัวอักษร';
           }
@@ -77,36 +88,67 @@ class _AdddataState extends State<Adddata> {
       ),
     );
   }
-
-  Widget txtPrice() {
+  Widget customerAddress(){
     return Container(
-      margin: EdgeInsets.fromLTRB(15, 20, 15, 20),
+      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: TextFormField(
+        style: TextStyle(
+          fontSize: 22,
+          color: Colors.black,
+        ),
+        decoration: InputDecoration(
+          labelText: 'ที่อยู่ในการจัดส่ง :',
+          icon: Icon(Icons.account_circle_rounded),
+          hintText: 'ใส่ที่อยู่',
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'กรุณาใส่ที่อยู่';
+          } else if (value.length < 2) {
+            return 'กรุณาใส่ข้อมูลมากกว่า 2 ตัวอักษร';
+          }
+        },
+        onSaved: (value) {
+          caddress = value;
+        },
+    ),
+    );
+  }
+  Widget txtCount() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: TextFormField(
         keyboardType: TextInputType.number,
         style: TextStyle(
           fontSize: 24,
-          color: pColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
-          labelText: 'ราคา:',
+          labelText: 'จำนวน:',
           icon: Icon(Icons.price_check),
-          hintText: 'ใส่ราคาสินค้า',
+          hintText: 'ใส่จำนวนที่ต้องการซื้อ',
         ),
-        validator: (value) {},
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'กรุณากรอกจำนวนี่ต้องการซื้อ';
+          } else if (value.length <=2 ) {
+            return 'กรุณาใส่จำนวนไม่เกิน 2 ตัวอักษร';
+          }
+        },
         onSaved: (value) {
-          price = value;
+          count = value;
         },
       ),
     );
   }
 
-  Widget txtStatus() {
+  Widget txtOrdernote() {
     return Container(
-      margin: EdgeInsets.fromLTRB(15, 20, 15, 20),
+      margin: EdgeInsets.fromLTRB(15, 0, 15, 30),
       child: TextFormField(
         style: TextStyle(
           fontSize: 24,
-          color: pColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: 'คำอธิบาย:',
@@ -114,7 +156,7 @@ class _AdddataState extends State<Adddata> {
           hintText: 'ใส่คำบรรบายสินค้า',
         ),
         onSaved: (value) {
-          status = value;
+          ordernote = value;
         },
       ),
     );
@@ -122,19 +164,32 @@ class _AdddataState extends State<Adddata> {
 
   Widget btnSubmit() => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: pColor,
+          textStyle: TextStyle(
+                    fontSize: 24,
+                  ),
+                  primary: pColor,
+                  minimumSize: Size(350, 0),
+                  padding: EdgeInsets.all(20.0),
+          shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        side: BorderSide(color: pColor)
+                        
+                        ),
+          
         ),
         onPressed: () {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
             print(name);
-            print(price);
+            print(caddress);
+            print(count);
+            print(ordernote);
             print(status);
             createData();
 
             formKey.currentState!.reset();
           }
         },
-        child: Text('Save'),
+        child: Text('Save',style: TextStyle( color:Colors.brown[900],),),
       );
 }

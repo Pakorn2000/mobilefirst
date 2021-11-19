@@ -23,7 +23,7 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'KMUTNB',
+      title: 'CornFlex',
       theme: ThemeData(
         primaryColor: pColor,
         secondaryHeaderColor: sColor,
@@ -32,9 +32,9 @@ class Myapp extends StatelessWidget {
           'login': (context) => FirebaseLogin(),
           'register': (context)=> FirebaseRegister(),
           'dashboard': (context) => Dashboard(),
-          'video': (context) => Video(),
-          'myimage': (context) => MyImage(),
-          'location': (context) => Location(),
+          //'video': (context) => Video(),
+          //'myimage': (context) => MyImage(),
+          //'location': (context) => Location(),
           'store': (context) => Store(),
 
 
